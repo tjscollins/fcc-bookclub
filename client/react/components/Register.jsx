@@ -51,6 +51,7 @@ export class Register extends React.Component {
               </form>
               <div>
                 <button onClick={this.submit} className='btn btn-default'>Sign up</button>
+                &nbsp;
                 <Link to='/login'>
                   <button className='btn btn-info'>
                     Login

@@ -7,7 +7,7 @@
     },
     {
       "name": "tablet portrait",
-      "width": 568,
+      "width": 768,
       "height": 1024
     },
     {
@@ -63,7 +63,7 @@
     "ci_report": "backstop_data/ci_report"
   },
   "casperFlags": [],
-  "engine": "phantomjs",
+  "engine": "slimerjs",
   "report": ["browser"],
   "debug": false
 }

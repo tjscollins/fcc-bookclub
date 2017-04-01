@@ -72,6 +72,7 @@ export class Login extends React.Component {
               </form>
               <div>
                 <button onClick={this.submit} className='btn btn-default'>Login</button>
+                &nbsp;
                 <Link to='/register'>
                   <button className='btn btn-info'>Sign up</button>
                 </Link>
