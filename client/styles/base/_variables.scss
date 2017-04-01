@@ -6,3 +6,13 @@ $tblt-port: 768px;
 $tblt-land: 992px;
 $desktop: 1200px;
 $big-desktop: 1800px;
+
+
+/**
+ * Colors
+ */
+
+$primary-color: hsl(220, 35%, 50%);
+$primary-bg-color: desaturate($primary-color, 0);
+$primary-hover-color: darken($primary-bg-color, 15);
+$primary-text-color: lighten($primary-color, 65);

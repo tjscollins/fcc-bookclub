@@ -7,6 +7,8 @@ import Index from 'Index';
 import Login from 'Login';
 import RouteContainer from 'RouteContainer';
 import Profile from 'Profile';
+import Header from 'Header';
+
 
 /**
  * Main Application React Component Class to Route within SPA

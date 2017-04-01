@@ -1,0 +1,14 @@
+.bookBazaar-feature {
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  color: $primary-text-color;
+  background-color: $primary-bg-color;
+
+  &:hover {
+    @include custom-transition(background-color .33s, ease-in-out, 0s);
+    background-color: $primary-hover-color;
+    cursor: pointer;
+  }
+}

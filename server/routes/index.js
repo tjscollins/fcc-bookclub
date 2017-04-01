@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
 
   app
     .route('/')
-    .get(isLoggedIn, sendIndex);
+    .get(sendIndex);
 
   app
     .route('/login')

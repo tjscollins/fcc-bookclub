@@ -2,7 +2,8 @@
 import React from 'react';
 
 /*----------Components----------*/
-
+import FeaturesPanel from 'FeaturesPanel';
+import Header from 'Header';
 
 export class Index extends React.Component {
   constructor() {
@@ -11,20 +12,16 @@ export class Index extends React.Component {
   render() {
     return (
       <div>
-        <div className='container'>
-          <img src='/public/img/clementine_150.png' />
-          <br />
-          <p className='clementine-text'>MERN Template</p>
-        </div>
-
-        <div className='container'>
-          <p>You have clicked the button <span id='click-nbr' /> times.</p>
-          <br />
-          <div className='btn-container'>
-            <button type='submit' className='btn btn-add'>CLICK ME!</button>
-            <button className='btn btn-delete'>RESET</button>
+        <Header />
+        <div className='jumbotron'>
+          <div className='container'>
+            <h1>bookBazaar</h1>
+            <h4>bring a book, take a book</h4>
+            <a className='btn btn-primary btn-lg' href='#' role='button'>Learn more</a>
           </div>
         </div>
+
+        <FeaturesPanel />
       </div>
     );
   }
