@@ -6,3 +6,17 @@ export const login = (xAuth, userId, email) => {
 export const logout = () => {
   return {type: 'LOGOUT'};
 };
+
+export const addBook = (book) => {
+  return {
+    type: 'ADD_BOOK',
+    book,
+  };
+};
+
+export const setBookCollection = (books) => {
+  return {
+    type: 'SET_BOOKS',
+    books,
+  };
+};

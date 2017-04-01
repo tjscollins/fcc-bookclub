@@ -12,6 +12,7 @@ import Application from 'Application';
 const initialState = {
   userSession: {
     ...JSON.parse(sessionStorage.getItem('bookBazaar-login')),
+    bookCollection: [],
   },
 };
 

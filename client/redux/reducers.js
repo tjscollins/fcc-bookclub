@@ -28,6 +28,20 @@ export const userSessionReducer = (state = {}, action) => {
         _id: null,
         email: null
       };
+    case 'ADD_BOOK':
+      let {book} = action;
+      return {
+        ...state,
+        bookCollection: [
+          ...state.bookCollection,
+          book
+        ],
+      };
+    case 'SET_BOOKS':
+      return {
+        ...state,
+        bookCollection: action.books,
+      };
     default:
       return state;
   }

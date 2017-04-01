@@ -1,0 +1,16 @@
+.book-on-shelf {
+  height: 300px;
+}
+
+.book-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.remove-book {
+  cursor: pointer;
+  margin-top: 10px;
+  color: red;
+}

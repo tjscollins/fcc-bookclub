@@ -5,6 +5,7 @@ import {userSessionReducer} from 'reducers';
 const configureStore = (initialState = {
   userSession: {
     xAuth: null,
+    bookCollection: [],
   },
 }) => {
   let combinedReducer = redux.combineReducers({

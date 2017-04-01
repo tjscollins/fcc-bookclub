@@ -97,9 +97,10 @@ module.exports = function(app, passport) {
     });
 
   app
-    .route('mybooklist')
-    .get(isLoggedIn, (req, res) => {
-      const {_id} = req.body;
+    .route('/mybooklist')
+    .get((req, res) => {
+      const _id = req.query.id;
+      // console.log(_id);
       UserModel
         .findOne({_id})
         .then((user) => {
@@ -114,8 +115,9 @@ module.exports = function(app, passport) {
             .send(e);
         });
     })
-    .post(isLoggedIn, (req, res) => {
+    .post((req, res) => {
       const {_id, book} = req.body;
+      // console.log('POST /mybooklist', _id, book);
       UserModel
         .findOne({_id})
         .then((user) => {
@@ -125,6 +127,26 @@ module.exports = function(app, passport) {
           res
             .status(200)
             .send(book);
+        })
+        .catch((e) => {
+          res
+            .status(400)
+            .send(e);
+        });
+    })
+    .delete((req, res) => {
+      const {_id, index} = req.body;
+      console.log(_id, index);
+      UserModel
+        .findOne({_id})
+        .then((user) => {
+          console.log(user);
+          user.bookCollection.splice(index, 1);
+          user.save().then((user) => {
+            res
+            .status(200)
+            .send({bookCollection: user.bookCollection});
+          });
         })
         .catch((e) => {
           res
