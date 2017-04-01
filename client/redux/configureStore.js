@@ -1,10 +1,10 @@
 import * as redux from 'redux';
 import thunk from 'redux-thunk';
-import {reducer} from 'reducers';
+import {userSessionReducer} from 'reducers';
 
 const configureStore = (initialState = {}) => {
-  let combinedReducer = reducer || redux.combineReducers({
-    main: reducer,
+  let combinedReducer = redux.combineReducers({
+    userSession: userSessionReducer,
   });
   let store = redux.createStore(combinedReducer, initialState, redux.compose(redux.applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()
