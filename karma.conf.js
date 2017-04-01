@@ -26,7 +26,7 @@ module.exports = function(config) {
       ]
     },
     files: [
-      // 'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/jquery/dist/jquery.min.js',
       'test/client/**/*.test.js',
       'test/client/**/*.test.jsx',
     ],

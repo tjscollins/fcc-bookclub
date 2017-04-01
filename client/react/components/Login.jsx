@@ -1,5 +1,6 @@
 /*----------Modules----------*/
 import React from 'react';
+import {Link} from 'react-router';
 import $ from 'jquery';
 
 /*----------Components----------*/
@@ -39,19 +40,15 @@ export class Login extends React.Component {
       //   }, 1500);
       });
   }
-  register = (e) => {
-    e.preventDefault();
-    $.get('/register');
-  }
   render() {
     return (
       <div>
-        <Header/>
+        <Header />
         <div className='login container'>
           <div className='row'>
             <div className='col-xs-12'>
               <h1>Login</h1>
-              <form className='form' method='post'>
+              <form onSubmit={this.submit} className='form' method='post'>
                 <div className='form-group'>
                   <label>Email</label>
                   <input
@@ -60,7 +57,7 @@ export class Login extends React.Component {
                     ref='email'
                     className='form-control'
                     required
-                    autoComplete='off'/>
+                    autoComplete='off' />
                 </div>
                 <div className='form-group'>
                   <label>Password</label>
@@ -70,13 +67,15 @@ export class Login extends React.Component {
                     ref='password'
                     className='form-control'
                     required
-                    autoComplete='off'/>
-                </div>
-                <div className='form-group'>
-                  <button onClick={this.submit} className='btn btn-default'>Login</button>
-                  <button onClick={this.register} className='btn btn-info'>Sign up</button>
+                    autoComplete='off' />
                 </div>
               </form>
+              <div>
+                <button onClick={this.submit} className='btn btn-default'>Login</button>
+                <Link to='/register'>
+                  <button className='btn btn-info'>Sign up</button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

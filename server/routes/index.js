@@ -36,8 +36,8 @@ module.exports = function(app, passport) {
     });
 
   app
-    .route('/profile')
-    .get(isLoggedIn, sendIndex);
+    .route('/register')
+    .get(sendIndex);
 
   app
     .route('/api/me')

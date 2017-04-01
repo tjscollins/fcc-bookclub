@@ -1,12 +1,12 @@
 /*global describe it beforeEach done*/
-const expect = require('expect');
+// const expect = require('expect');
 const request = require('supertest');
 const {app} = require('./../../server.js');
 
 describe('Server Routes', () => {
   describe('/', () => {
     describe('GET', () => {
-      it('should respond with redirect 200', (done) => {
+      it('should respond with success 200', (done) => {
         request(app)
           .get('/')
           .send()
@@ -52,21 +52,21 @@ describe('Server Routes', () => {
     });
   });
 
-  describe('/profile', () => {
-    describe('GET', () => {
-      it('should redirect an unauthenticated user', (done) => {
-        request(app)
-          .get('/profile')
-          .send()
-          .expect(302)
-          .end((err, res) => {
-            if (err)
-              return done(err);
-            done();
-          });
-      });
-    });
-  });
+  // describe('/profile', () => {
+  //   describe('GET', () => {
+  //     it('should redirect an unauthenticated user', (done) => {
+  //       request(app)
+  //         .get('/profile')
+  //         .send()
+  //         .expect(302)
+  //         .end((err, res) => {
+  //           if (err)
+  //             return done(err);
+  //           done();
+  //         });
+  //     });
+  //   });
+  // });
 
   describe('/api/me', () => {
     describe('GET', () => {

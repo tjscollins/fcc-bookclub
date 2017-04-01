@@ -1,5 +1,6 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 /*----------Components----------*/
 
@@ -28,19 +29,22 @@ export class Header extends Component {
 
           <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
             <ul className='nav navbar-nav'>
-              <li className='active'>
-                <a href='/'>Home
-                  <span className='sr-only'>(current)</span>
-                </a>
+              <li className={window.location.pathname == '/' ? 'active' : ''}>
+                <Link to='/'>
+                  Home
+                </Link>
               </li>
             </ul>
-
             <ul className='nav navbar-nav navbar-right'>
-              <li>
-                <a href='/register'>Sign up</a>
+              <li className={window.location.pathname == '/register' ? 'active' : ''}>
+                <Link to='/register'>
+                  Sign up
+                </Link>
               </li>
-              <li>
-                <a href='/login'>Login</a>
+              <li className={window.location.pathname == '/login' ? 'active' : ''}>
+                <Link to='/login'>
+                  Login
+                </Link>
               </li>
 
             </ul>

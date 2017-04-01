@@ -6,8 +6,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Index from 'Index';
 import Login from 'Login';
 import RouteContainer from 'RouteContainer';
-import Profile from 'Profile';
-import Header from 'Header';
+import Register from 'Register';
 
 
 /**
@@ -20,7 +19,7 @@ export class Application extends React.Component {
         <Route path='/' component={RouteContainer}>
           <IndexRoute component={Index} />
           <Route path='login' component={Login} />
-          <Route path='profile' component={Profile} />
+          <Route path='register' component={Register} />
         </Route>
       </Router>
     );
