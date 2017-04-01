@@ -1,14 +1,75 @@
-.bookBazaar-feature {
-  display: flex;
-  height: 100px;
-  justify-content: center;
+.feature-panel {
+  display    : flex;
   align-items: center;
-  color: $primary-text-color;
-  background-color: $primary-bg-color;
+  flex-direction: column;
+  @include for-phone-only {
+    width: 75%;
+  }
+  @include for-tablet-portrait-up {
+    width: 75%;
+  }
+  @include for-tablet-landscape-up {
+    width: 50%;
+  }
+  @include for-desktop-up {
+    width: 33%;
+  }
+}
+
+.feature-row {
+  display    : flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.bookBazaar-feature {
+  h4 {
+    margin: 15px;
+    text-align: center;
+    @include for-phone-only{
+      font-size: 1.2rem;
+    }
+    @include for-tablet-portrait-up {
+      font-size: 1.75rem;
+    }
+    @include for-tablet-landscape-up {
+      font-size: 2rem;
+    }
+  }
 
   &:hover {
     @include custom-transition(background-color .33s, ease-in-out, 0s);
     background-color: $primary-hover-color;
-    cursor: pointer;
+    cursor          : pointer;
   }
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  background-color: $primary-bg-color;
+  color           : $primary-text-color
+}
+
+.square {
+  /* width within the parent.
+       can be any percentage. */
+  width: 100%;
+}
+
+.square:before {
+  /* essentially the aspect ratio. 100% means the
+       div will remain 100% as tall as it is wide, or
+       square in other words.  */
+  padding-bottom: 100%;
+  float         : left;
+  content       : "";
+}
+/* this is a clearfix. you can use whatever
+   clearfix you usually use, add
+   overflow:hidden to the parent element,
+   or simply float the parent container. */
+.square:after {
+  display: table;
+  clear  : both;
+  content: "";
 }
