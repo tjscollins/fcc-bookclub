@@ -46,11 +46,10 @@ export class MyBooks extends Component {
   }
   myBookshelf = () => {
     const {bookCollection} = this.props.userSession;
-    console.log(bookCollection);
     return bookCollection.map((book, i) => {
       let {title, imageLinks: {thumbnail}, infoLink} = book.volumeInfo;
       return (
-        <div className='book-on-shelf col-xs-6 col-sm-3 col-md-2'>
+        <div key={`${title}-${i}`} className='book-on-shelf col-xs-6 col-sm-3 col-md-2'>
           <div className='book-header'>
             <a href={infoLink} target='_blank'>
               <h4>{title}</h4>

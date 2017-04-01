@@ -26,7 +26,8 @@ export const userSessionReducer = (state = {}, action) => {
         ...state,
         xAuth: null,
         _id: null,
-        email: null
+        email: null,
+        bookCollection: [],
       };
     case 'ADD_BOOK':
       let {book} = action;

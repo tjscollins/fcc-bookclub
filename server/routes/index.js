@@ -54,7 +54,6 @@ module.exports = function(app, passport) {
   app
     .route('/logout')
     .get(function(req, res) {
-      req.logout();
       res.redirect('/login');
     });
 
@@ -95,6 +94,9 @@ module.exports = function(app, passport) {
     function(req, res) {
       res.json(req.user.github);
     });
+
+  app.route('/mybooks').get(sendIndex);
+  app.route('/booklist').get(sendIndex);
 
   app
     .route('/mybooklist')
