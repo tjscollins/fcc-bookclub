@@ -2,7 +2,11 @@ import * as redux from 'redux';
 import thunk from 'redux-thunk';
 import {userSessionReducer} from 'reducers';
 
-const configureStore = (initialState = {}) => {
+const configureStore = (initialState = {
+  userSession: {
+    xAuth: null,
+  },
+}) => {
   let combinedReducer = redux.combineReducers({
     userSession: userSessionReducer,
   });

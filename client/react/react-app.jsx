@@ -11,7 +11,7 @@ import Application from 'Application';
 
 const initialState = {
   userSession: {
-    xAuth: null,
+    ...JSON.parse(sessionStorage.getItem('bookBazaar-login')),
   },
 };
 
