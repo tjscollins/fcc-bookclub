@@ -97,6 +97,7 @@ module.exports = function(app, passport) {
 
   app.route('/mybooks').get(sendIndex);
   app.route('/booklist').get(sendIndex);
+  app.route('/settings').get(sendIndex);
 
   app
     .route('/mybooklist')
