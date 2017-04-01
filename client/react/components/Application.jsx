@@ -10,6 +10,7 @@ import Login from 'Login';
 import MyBooks from 'MyBooks';
 import RouteContainer from 'RouteContainer';
 import Register from 'Register';
+import Settings from 'Settings';
 
 
 /**
@@ -25,6 +26,7 @@ export class Application extends React.Component {
           <Route exact path='register' component={Register} />
           <Route exact path='booklist' component={BookList} />
           <Route exact path='mybooks' component={MyBooks} />
+          <Route exact path='settings' component={Settings} />
         </Route>
       </Router>
     );

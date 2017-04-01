@@ -2,10 +2,15 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
+/*----------Components----------*/
+import Header from 'Header';
+
 export class MyBooks extends Component {
   render() {
     return (
-      <div />
+      <div>
+        <Header />
+      </div>
     );
   }
 }
