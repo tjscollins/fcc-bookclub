@@ -31,24 +31,24 @@ module.exports = function(app, passport) {
       /**
        * Login w/ provided credentials
        */
-       /**
+      /**
        * Login with provided user credentials
        */
-       let body = _.pick(req.body, ['email', 'password']);
+      let body = _.pick(req.body, ['email', 'password']);
 
-       UserModel.findByCredentials(body.email.trim().toLowerCase(), body.password).then((user) => {
-         return user
-           .generateAuthToken()
-           .then((token) => {
-             res
-               .header('x-auth', token)
-               .send(user);
-           });
-       }).catch((e) => {
-         res
-           .status(400)
-           .send();
-       });
+      UserModel.findByCredentials(body.email.trim().toLowerCase(), body.password).then((user) => {
+        return user
+          .generateAuthToken()
+          .then((token) => {
+            res
+              .header('x-auth', token)
+              .send(user);
+          });
+      }).catch((e) => {
+        res
+          .status(400)
+          .send();
+      });
     });
 
   app

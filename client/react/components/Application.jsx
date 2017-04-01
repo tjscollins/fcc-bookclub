@@ -1,5 +1,6 @@
 /*----------React----------*/
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 /*----------Components----------*/
@@ -18,12 +19,16 @@ export class Application extends React.Component {
       <Router history={browserHistory}>
         <Route path='/' component={RouteContainer}>
           <IndexRoute component={Index} />
-          <Route path='login' component={Login} />
-          <Route path='register' component={Register} />
+          <Route exact path='login' component={Login} />
+          <Route exact path='register' component={Register} />
         </Route>
       </Router>
     );
   }
 }
 
-export default Application;
+Application.propTypes = {
+    userSession: PropTypes.object,
+};
+
+export default connect((state) => state)(Application);

@@ -68,7 +68,7 @@ export class Header extends Component {
     }
   }
   render() {
-    const {dispatch, userSession} = this.props;
+    const {userSession} = this.props;
     return (
       <nav className='navbar navbar-default'>
         <div className='container'>
@@ -80,9 +80,9 @@ export class Header extends Component {
               data-target='#bs-example-navbar-collapse-1'
               aria-expanded='false'>
               <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar'/>
-              <span className='icon-bar'/>
-              <span className='icon-bar'/>
+              <span className='icon-bar' />
+              <span className='icon-bar' />
+              <span className='icon-bar' />
             </button>
             <a className='navbar-brand' href='#'>bookBazaar</a>
           </div>

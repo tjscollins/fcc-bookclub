@@ -1,7 +1,7 @@
 /*----------Modules----------*/
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import $ from 'jquery';
 
 /*----------Components----------*/
@@ -15,6 +15,7 @@ export class Login extends React.Component {
   constructor() {
     super();
   }
+
   submit = (e) => {
     e.preventDefault();
     const {dispatch} = this.props;
@@ -33,15 +34,10 @@ export class Login extends React.Component {
         dispatch(actions.login(jqXHR.getResponseHeader('x-auth'), JSON.parse(jqXHR.responseText)._id, email.value));
         this.refs.email.value = '';
         this.refs.password.value = '';
-        // $('#login-modal').modal('hide');
-        // $('.wrong-password').css('color', 'white');
+        browserHistory.push('/');
       })
       .fail((jqXHR, status, err) => {
         console.log('Login error', jqXHR);
-      //   $('.wrong-password').css('color', 'red');
-      //   setTimeout(() => {
-      //     $('.wrong-password').css('color', 'white');
-      //   }, 1500);
       });
   }
   render() {
@@ -52,7 +48,7 @@ export class Login extends React.Component {
           <div className='row'>
             <div className='col-xs-12'>
               <h1>Login</h1>
-              <form onSubmit={this.submit} className='form' method='post'>
+              <form onSubmit={this.submit} className='form' method=''>
                 <div className='form-group'>
                   <label>Email</label>
                   <input
@@ -73,14 +69,14 @@ export class Login extends React.Component {
                     required
                     autoComplete='off' />
                 </div>
+                <div>
+                  <button onClick={this.submit} className='btn btn-default'>Login</button>
+                  &nbsp;
+                  <Link to='/register'>
+                    <button onClick={() => {}} className='btn btn-info'>Sign up</button>
+                  </Link>
+                </div>
               </form>
-              <div>
-                <button onClick={this.submit} className='btn btn-default'>Login</button>
-                &nbsp;
-                <Link to='/register'>
-                  <button className='btn btn-info'>Sign up</button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>

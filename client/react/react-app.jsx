@@ -9,7 +9,13 @@ import configureStore from 'configureStore';
 /*----------Components----------*/
 import Application from 'Application';
 
+const initialState = {
+  userSession: {
+    xAuth: null,
+  },
+};
+
 ReactDOM.render(
-  <Provider store={configureStore()}>
+  <Provider store={configureStore(initialState)}>
     <Application />
   </Provider>, document.getElementById('react-app'));
