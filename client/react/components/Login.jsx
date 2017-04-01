@@ -1,10 +1,14 @@
 /*----------Modules----------*/
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import $ from 'jquery';
 
 /*----------Components----------*/
 import Header from 'Header';
+
+/*----------Redux----------*/
+import * as actions from 'actions';
 
 /*eslint-disable require-jsdoc*/
 export class Login extends React.Component {
@@ -13,7 +17,7 @@ export class Login extends React.Component {
   }
   submit = (e) => {
     e.preventDefault();
-    console.log(this.refs);
+    const {dispatch} = this.props;
     const {email, password} = this.refs;
     const request = {
       method: 'post',
@@ -85,4 +89,8 @@ export class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatch: PropTypes.func,
+};
+
+export default connect((state) => state)(Login);
