@@ -41,12 +41,24 @@ const User = new Schema({
     }
   ],
   bookCollection: {
-    type: Array,
+    type: Array
   },
   bookRequests: {
-    type: Array,
-  },
+    type: Array
+  }
 });
+
+User.methods.addBook = function(book) {
+  let user = this;
+  user
+    .bookCollection
+    .push(book);
+  return user
+    .save()
+    .then(() => {
+      return book;
+    });
+};
 
 User.methods.toJSON = function() {
   return _.pick(this.toObject(), ['_id', 'email']);
@@ -61,10 +73,14 @@ User.methods.generateAuthToken = function() {
       .toHexString(),
     access
   }, 'abc123');
-  user.tokens = user.tokens.filter((jwt) => {
-    // Only keep tokens that are less than 1 day old.  Purge older tokens.
-    return Date.now() - jwt.date.valueOf() < 86400000;
-  });
+  user.tokens = user
+    .tokens
+    .filter((jwt) => {
+      // Only keep tokens that are less than 1 day old.  Purge older tokens.
+      return Date.now() - jwt
+        .date
+        .valueOf() < 86400000;
+    });
   user
     .tokens
     .push({access, token});
@@ -172,7 +188,6 @@ User.statics.resetPassword = function(email) {
       });
     });
 };
-
 
 User.pre('save', function(next) {
   let user = this;

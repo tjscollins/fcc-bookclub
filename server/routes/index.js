@@ -97,13 +97,39 @@ module.exports = function(app, passport) {
     });
 
   app
-    .route('/auth/github')
-    .get(passport.authenticate('github'));
-
-  app
-    .route('/auth/github/callback')
-    .get(passport.authenticate('github', {
-      successRedirect: '/',
-      failureRedirect: '/login'
-    }));
+    .route('mybooklist')
+    .get(isLoggedIn, (req, res) => {
+      const {_id} = req.body;
+      UserModel
+        .findOne({_id})
+        .then((user) => {
+          const {bookCollection} = user;
+          res
+            .status(200)
+            .send({bookCollection});
+        })
+        .catch((e) => {
+          res
+            .status(400)
+            .send(e);
+        });
+    })
+    .post(isLoggedIn, (req, res) => {
+      const {_id, book} = req.body;
+      UserModel
+        .findOne({_id})
+        .then((user) => {
+          return user.addBook(book);
+        })
+        .then((book) => {
+          res
+            .status(200)
+            .send(book);
+        })
+        .catch((e) => {
+          res
+            .status(400)
+            .send(e);
+        });
+    });
 };
