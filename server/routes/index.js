@@ -23,7 +23,10 @@ module.exports = function(app, passport) {
 
   app
     .route('/login')
-    .get(sendIndex);
+    .get(sendIndex)
+    .post((req, res) => {
+      console.log(req.body);
+    });
 
   app
     .route('/logout')

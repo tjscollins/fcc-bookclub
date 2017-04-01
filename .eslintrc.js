@@ -10,8 +10,9 @@ module.exports = {
   "extends": [
     "google", "standard-react",
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 7,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -24,6 +25,7 @@ module.exports = {
     "comma-dangle": "off",
     "max-len": ["error", 150],
     "no-unused-vars": "warn",
+    "no-invalid-this": "off",
     "react/jsx-no-bind": "off",
     "spaced-comment": "off",
     "require-jsdoc": ["error", {

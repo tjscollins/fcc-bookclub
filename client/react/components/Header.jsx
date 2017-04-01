@@ -6,7 +6,6 @@ import React, {Component} from 'react';
 export class Header extends Component {
   constructor() {
     super();
-    this.propTypes = {};
   }
   render() {
     return (
@@ -30,7 +29,7 @@ export class Header extends Component {
           <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
             <ul className='nav navbar-nav'>
               <li className='active'>
-                <a href='#'>Home
+                <a href='/'>Home
                   <span className='sr-only'>(current)</span>
                 </a>
               </li>
@@ -38,10 +37,10 @@ export class Header extends Component {
 
             <ul className='nav navbar-nav navbar-right'>
               <li>
-                <a href='#'>Sign up</a>
+                <a href='/register'>Sign up</a>
               </li>
               <li>
-                <a href='#'>Login</a>
+                <a href='/login'>Login</a>
               </li>
 
             </ul>
@@ -51,9 +50,9 @@ export class Header extends Component {
     );
   }
 }
-//
-// Header.propTypes = {
-//
-// };
+
+Header.propTypes = {
+
+};
 
 export default Header;
