@@ -7,11 +7,11 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
 /*----------Redux----------*/
-// import {Provider} from 'react-redux'; import {configure} from
-// 'configureStore';
+import {Provider} from 'react-redux';
+import configureStore from 'configureStore';
 
 /*----------Components----------*/
-import {Register} from 'Register';
+import Register from 'Register';
 
 describe('Register', () => {
   it('should exist', () => {
@@ -20,7 +20,16 @@ describe('Register', () => {
 
   it('should render without errors', () => {
     try {
-      TestUtils.renderIntoDocument(<Register />);
+      const initialState = {
+        userSession: {
+          xAuth: null
+        }
+      };
+      TestUtils.renderIntoDocument(
+        <Provider store={configureStore(initialState)}>
+          <Register />
+        </Provider>
+      );
     } catch (error) {
       expect(error).toNotExist();
     }

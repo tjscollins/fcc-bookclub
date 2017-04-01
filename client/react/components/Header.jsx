@@ -69,6 +69,8 @@ export class Header extends Component {
   }
   render() {
     const {userSession} = this.props;
+    console.log('props: ', this.props);
+    console.log('userSession: ', userSession);
     return (
       <nav className='navbar navbar-default'>
         <div className='container'>
@@ -91,7 +93,7 @@ export class Header extends Component {
             <ul className='nav navbar-nav'>
               <li
                 className={window.location.pathname == '/'
-                ? 'active'
+                  ? 'active'
                 : ''}>
                 <Link to='/'>
                   Home

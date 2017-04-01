@@ -7,11 +7,11 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
 /*----------Redux----------*/
-// import {Provider} from 'react-redux'; import {configure} from
-// 'configureStore';
+import {Provider} from 'react-redux';
+import configureStore from 'configureStore';
 
 /*----------Components----------*/
-import {Header} from 'Header';
+import Header from 'Header';
 
 describe('Header', () => {
   it('should exist', () => {
@@ -20,7 +20,16 @@ describe('Header', () => {
 
   it('should render without errors', () => {
     try {
-      let header = TestUtils.renderIntoDocument(<Header />);
+      const initialState = {
+        userSession: {
+          xAuth: null
+        }
+      };
+      TestUtils.renderIntoDocument(
+        <Provider store={configureStore(initialState)}>
+          <Header />
+        </Provider>
+      );
     } catch (error) {
       expect(error).toNotExist();
     }

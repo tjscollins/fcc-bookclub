@@ -4,8 +4,10 @@ import {connect} from 'react-redux';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 /*----------Components----------*/
+import BookList from 'BookList';
 import Index from 'Index';
 import Login from 'Login';
+import MyBooks from 'MyBooks';
 import RouteContainer from 'RouteContainer';
 import Register from 'Register';
 
@@ -21,6 +23,8 @@ export class Application extends React.Component {
           <IndexRoute component={Index} />
           <Route exact path='login' component={Login} />
           <Route exact path='register' component={Register} />
+          <Route exact path='booklist' component={BookList} />
+          <Route exact path='mybooks' component={MyBooks} />
         </Route>
       </Router>
     );

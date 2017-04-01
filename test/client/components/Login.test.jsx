@@ -7,11 +7,11 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
 /*----------Redux----------*/
-// import {Provider} from 'react-redux';
-// import {configure} from 'configureStore';
+import {Provider} from 'react-redux';
+import configureStore from 'configureStore';
 
 /*----------Components----------*/
-import {Login} from 'Login';
+import Login from 'Login';
 
 describe('Login', () => {
   it('should exist', () => {
@@ -20,7 +20,16 @@ describe('Login', () => {
 
   it('should render without errors', () => {
     try {
-      let login = TestUtils.renderIntoDocument(<Login />);
+      const initialState = {
+        userSession: {
+          xAuth: null
+        }
+      };
+      TestUtils.renderIntoDocument(
+        <Provider store={configureStore(initialState)}>
+          <Login/>
+        </Provider>
+      );
     } catch (error) {
       expect(error).toNotExist();
     }
