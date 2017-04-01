@@ -1,7 +1,10 @@
 'use strict';
 /*eslint-disable require-jsdoc*/
 
+const _ = require('underscore');
 const path = process.cwd();
+
+const UserModel = require('../models/users');
 
 const sendIndex = (req, res) => {
   res.sendFile(`${path}/public/index.html`);
@@ -25,7 +28,27 @@ module.exports = function(app, passport) {
     .route('/login')
     .get(sendIndex)
     .post((req, res) => {
-      console.log(req.body);
+      /**
+       * Login w/ provided credentials
+       */
+       /**
+       * Login with provided user credentials
+       */
+       let body = _.pick(req.body, ['email', 'password']);
+
+       UserModel.findByCredentials(body.email.trim().toLowerCase(), body.password).then((user) => {
+         return user
+           .generateAuthToken()
+           .then((token) => {
+             res
+               .header('x-auth', token)
+               .send(user);
+           });
+       }).catch((e) => {
+         res
+           .status(400)
+           .send();
+       });
     });
 
   app
@@ -37,15 +60,41 @@ module.exports = function(app, passport) {
 
   app
     .route('/register')
-    .get(sendIndex);
+    .get(sendIndex)
+    .post((req, res) => {
+      /**
+       * Create a new user account
+       */
+      let body = _.pick(req.body, ['email', 'password']);
+      body.email = body
+        .email
+        .trim()
+        .toLowerCase();
+      let user = new UserModel(body);
+      user
+        .save()
+        .then(() => {
+          return user.generateAuthToken();
+        })
+        .then((token) => {
+          res
+            .header('x-auth', token)
+            .send(user);
+        })
+        .catch((e) => {
+          res
+            .status(400)
+            .send(e);
+        });
+    });
 
   app
     .route('/api/me')
     .get(isLoggedIn,
-      /*istanbul ignore next: not sure how to fake req.isAuthenticated() for tests*/
-      function(req, res) {
-        res.json(req.user.github);
-      });
+    /*istanbul ignore next: not sure how to fake req.isAuthenticated() for tests*/
+    function(req, res) {
+      res.json(req.user.github);
+    });
 
   app
     .route('/auth/github')
@@ -55,6 +104,6 @@ module.exports = function(app, passport) {
     .route('/auth/github/callback')
     .get(passport.authenticate('github', {
       successRedirect: '/',
-      failureRedirect: '/login',
+      failureRedirect: '/login'
     }));
 };
