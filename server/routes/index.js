@@ -88,6 +88,50 @@ module.exports = function(app, passport) {
     });
 
   app
+    .route('/profile')
+    .get((req, res) => {
+      const _id = req.query.id;
+      // console.log(_id);
+      UserModel
+        .findOne({_id})
+        .then((user) => {
+          const {profile} = user;
+          res
+            .status(200)
+            .send({profile});
+        })
+        .catch((e) => {
+          res
+            .status(400)
+            .send(e);
+        });
+    })
+    .post((req, res) => {
+      const {_id, name, city, state} = req.body;
+      UserModel
+        .findOne({_id})
+        .then((user) => {
+          user.profile = {
+            name,
+            city,
+            state
+          };
+          user
+            .save()
+            .then(({profile}) => {
+              res
+                .status(200)
+                .send(profile);
+            });
+        })
+        .catch((err) => {
+          res
+            .status(400)
+            .send(err);
+        });
+    });
+
+  app
     .route('/api/me')
     .get(isLoggedIn,
     /*istanbul ignore next: not sure how to fake req.isAuthenticated() for tests*/
@@ -95,9 +139,15 @@ module.exports = function(app, passport) {
       res.json(req.user.github);
     });
 
-  app.route('/mybooks').get(sendIndex);
-  app.route('/booklist').get(sendIndex);
-  app.route('/settings').get(sendIndex);
+  app
+    .route('/mybooks')
+    .get(sendIndex);
+  app
+    .route('/booklist')
+    .get(sendIndex);
+  app
+    .route('/settings')
+    .get(sendIndex);
 
   app
     .route('/mybooklist')
@@ -144,12 +194,16 @@ module.exports = function(app, passport) {
         .findOne({_id})
         .then((user) => {
           console.log(user);
-          user.bookCollection.splice(index, 1);
-          user.save().then((user) => {
-            res
-            .status(200)
-            .send({bookCollection: user.bookCollection});
-          });
+          user
+            .bookCollection
+            .splice(index, 1);
+          user
+            .save()
+            .then((user) => {
+              res
+                .status(200)
+                .send({bookCollection: user.bookCollection});
+            });
         })
         .catch((e) => {
           res

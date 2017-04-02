@@ -2,14 +2,63 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import $ from 'jquery';
 
 /*----------Components----------*/
 import Header from 'Header';
 
+/*----------Redux----------*/
+import * as actions from 'actions';
+
 export class Settings extends Component {
-  changePassword() {}
-  updateProfile() {}
+  changePassword = () => {
+
+  }
+  fetchProfile = () => {
+    const {dispatch, userSession: {_id}} = this.props;
+    let request = {
+      url: '/profile',
+      method: 'GET',
+      data: `id=${_id}`,
+      dataType: 'json',
+    };
+    $.ajax(request)
+      .done(({profile}) => {
+          dispatch(actions.setProfile(profile));
+      });
+  }
+  updateProfile = () => {
+    const {userSession: {_id}, dispatch} = this.props;
+    const {name, city, state} = this.refs;
+    let request = {
+      url: '/profile',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: JSON.stringify({
+        name: name.value,
+        city: city.value,
+        state: state.value,
+        _id,
+      }),
+      dataType: 'json',
+    };
+    $
+      .ajax(request)
+      .done((profile) => {
+        name.value = '';
+        city.value = '';
+        state.value = '';
+        dispatch(actions.setProfile(profile));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   render() {
+    const {name, city, state} = this.props.userSession.profile;
+    if(!name) this.fetchProfile();
     return (
       <div>
         <Header />
@@ -24,6 +73,7 @@ export class Settings extends Component {
                     type='text'
                     name='name'
                     ref='name'
+                    placeholder={name}
                     className='form-control'
                     required
                     autoComplete='off' />
@@ -34,6 +84,7 @@ export class Settings extends Component {
                     type='text'
                     name='city'
                     ref='city'
+                    placeholder={city}
                     className='form-control'
                     required
                     autoComplete='off' />
@@ -44,6 +95,7 @@ export class Settings extends Component {
                     type='text'
                     name='state'
                     ref='state'
+                    placeholder={state}
                     className='form-control'
                     required
                     autoComplete='off' />
@@ -91,4 +143,9 @@ export class Settings extends Component {
   }
 }
 
-export default Settings;
+Settings.propTypes = {
+  dispatch: PropTypes.func,
+  userSession: PropTypes.object,
+};
+
+export default connect((state) => state)(Settings);

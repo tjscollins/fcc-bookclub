@@ -43,6 +43,11 @@ export const userSessionReducer = (state = {}, action) => {
         ...state,
         bookCollection: action.books,
       };
+    case 'SET_PROFILE':
+      return {
+        ...state,
+        profile: action.profile,
+      };
     default:
       return state;
   }

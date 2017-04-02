@@ -15,6 +15,7 @@ export class Header extends Component {
   logout = () => {
     this.props.dispatch(actions.logout());
   }
+
   navbarRight(userSession) {
     if (userSession.xAuth) {
       return (
@@ -72,8 +73,6 @@ export class Header extends Component {
   }
   render() {
     const {userSession} = this.props;
-    // console.log('props: ', this.props);
-    // console.log('userSession: ', userSession);
     return (
       <nav className='navbar navbar-default'>
         <div className='container'>

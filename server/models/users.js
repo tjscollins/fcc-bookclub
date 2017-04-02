@@ -24,6 +24,20 @@ const User = new Schema({
     required: true,
     minlength: 6
   },
+  profile: {
+    name: {
+      type: String,
+      default: '',
+    },
+    city: {
+      type: String,
+      default: '',
+    },
+    state: {
+      type: String,
+      default: '',
+    },
+  },
   tokens: [
     {
       access: {
