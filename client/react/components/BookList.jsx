@@ -11,28 +11,6 @@ import TradeRequests from 'TradeRequests';
 import * as actions from 'actions';
 
 export class BookList extends Component {
-  componentDidMount() {
-    this.fetchLibrary();
-  }
-  fetchLibrary = () => {
-    const {library, dispatch} = this.props;
-    let request = {
-      url: '/library',
-      method: 'GET',
-      dataType: 'json'
-    };
-    $
-      .ajax(request)
-      .done((newLibrary) => {
-        console.log(newLibrary);
-        if (library.length !== newLibrary.length) {
-          dispatch(actions.setLibrary(newLibrary));
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
   requestBook(index) {
     const {dispatch} = this.props;
     const {_id} = this.props.userSession;

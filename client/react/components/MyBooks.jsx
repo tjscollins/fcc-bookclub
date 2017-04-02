@@ -11,21 +11,6 @@ import TradeRequests from 'TradeRequests';
 import * as actions from 'actions';
 
 export class MyBooks extends Component {
-  fetchBooks = () => {
-    const {dispatch, userSession: {_id}} = this.props;
-    let request = {
-      url: '/mybooklist',
-      method: 'GET',
-      data: `id=${_id}`,
-      dataType: 'json',
-    };
-    $.ajax(request)
-      .done(({bookCollection}) => {
-        if (bookCollection.length > this.props.userSession.bookCollection.length) {
-          dispatch(actions.setBookCollection(bookCollection));
-        }
-      });
-  }
   removeBook = (index) => {
     const {dispatch, userSession: {_id}} = this.props;
     let request = {
@@ -113,7 +98,6 @@ export class MyBooks extends Component {
       });
   }
   render() {
-    this.fetchBooks();
     return (
       <div>
         <Header />
