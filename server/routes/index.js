@@ -3,7 +3,7 @@
 
 const _ = require('underscore');
 const path = process.cwd();
-
+const bcrypt = require('bcryptjs');
 const UserModel = require('../models/users');
 
 const sendIndex = (req, res) => {
@@ -84,6 +84,36 @@ module.exports = function(app, passport) {
           res
             .status(400)
             .send(e);
+        });
+    });
+
+  app
+    .route('/changepassword')
+    .post((req, res) => {
+      let body = _.pick(req.body, ['email', 'newPassword']);
+      bcrypt
+        .hash(body.newPassword, 10)
+        .then((hash) => {
+          UserModel.update({
+            email: body
+              .email
+              .trim()
+              .toLowerCase()
+          }, {
+            password: hash
+          }, (err, raw) => {
+            if (err)
+              console.log('Error patching password', err);
+            }
+          );
+        })
+        .then(() => {
+          res.redirect(303, '/settings');
+        })
+        .catch((err) => {
+          res
+            .status(500)
+            .send();
         });
     });
 

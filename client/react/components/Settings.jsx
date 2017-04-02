@@ -12,7 +12,30 @@ import * as actions from 'actions';
 
 export class Settings extends Component {
   changePassword = () => {
-
+    const {userSession: {email}} = this.props;
+    const {currPassword, newPassword} = this.refs;
+    let request = {
+      url: '/changepassword',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: JSON.stringify({
+        current: currPassword.value,
+        newPassword: newPassword.value,
+        email,
+      }),
+      dataType: 'json',
+    };
+    $
+      .ajax(request)
+      .done(() => {
+        currPassword.value = '';
+        newPassword.value = '';
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   fetchProfile = () => {
     const {dispatch, userSession: {_id}} = this.props;
