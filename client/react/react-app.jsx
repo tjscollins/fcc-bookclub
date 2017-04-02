@@ -14,6 +14,10 @@ const initialState = {
     ...JSON.parse(sessionStorage.getItem('bookBazaar-login')),
     bookCollection: [],
     profile: {},
+    loans: {
+      owner: [],
+      borrower: [],
+    },
   },
 };
 

@@ -34,6 +34,8 @@ export class BookList extends Component {
       });
   }
   requestBook(index) {
+    const {dispatch} = this.props;
+    const {_id} = this.props.userSession;
     const book = this.props.library[index];
     let request = {
       url: '/request',
@@ -41,11 +43,16 @@ export class BookList extends Component {
       headers: {
         'Content-type': 'application/json',
       },
-      data: book,
+      data: JSON.stringify({book, _id}),
       dataType: 'json'
     };
     $.ajax(request)
-      .done(() => {})
+      .done((loan) => {
+        console.log('New loan registered:', loan);
+        if(loan) {
+          dispatch(actions.borrowBook(loan));
+        }
+      })
       .catch(console.error);
   }
   library = () => {

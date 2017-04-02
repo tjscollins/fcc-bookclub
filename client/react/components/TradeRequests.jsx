@@ -7,12 +7,32 @@ import $ from 'jquery';
 // import Header from 'Header';
 
 /*----------Redux----------*/
-// import * as actions from 'actions';
+import * as actions from 'actions';
 
 export class TradeRequests extends Component {
   state = {
     showMyRequests: false,
     showIncomingRequests: false,
+  }
+  componentDidMount() {
+    this.fetchLoans();
+  }
+  fetchLoans = () => {
+    const {dispatch, userSession: {_id}} = this.props;
+    let request = {
+      url: `/request?user=${_id}`,
+      method: 'GET',
+      dataType: 'json'
+    };
+    $
+      .ajax(request)
+      .done((loans) => {
+        console.log('Fetched Loans: ', loans);
+        dispatch(actions.updateLoans(loans));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   render() {
     const {showMyRequests, showIncomingRequests} = this.state;
@@ -59,5 +79,11 @@ export class TradeRequests extends Component {
     );
   }
 }
+
+TradeRequests.propTypes = {
+  dispatch: PropTypes.func,
+  library: PropTypes.object,
+  userSession: PropTypes.object,
+};
 
 export default connect((state) => state)(TradeRequests);

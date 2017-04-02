@@ -6,6 +6,7 @@ const path = process.cwd();
 const bcrypt = require('bcryptjs');
 const UserModel = require('../models/users');
 const BookModel = require('../models/book');
+const LoanModel = require('../models/loan');
 
 const sendIndex = (req, res) => {
   res.sendFile(`${path}/public/index.html`);
@@ -276,6 +277,45 @@ module.exports = function(app, passport) {
           res
             .status(200)
             .send(books);
+        })
+        .catch(console.error);
+    });
+
+  app
+    .route('/request')
+    .get((req, res) => {
+      let {user} = req.query;
+      console.log(user);
+      Promise.all([
+        LoanModel.find({owner: user}),
+        LoanModel.find({borrower: user}),
+      ]).then((loans) => {
+        res.status(200).send(loans);
+      })
+      .catch(console.error);
+    })
+    .post((req, res) => {
+      const borrower = req.body._id;
+      const book = req.body.book._id;
+      const {owner} = req.body.book;
+      console.log(req.body);
+      LoanModel
+        .findOne({book})
+        .then((loan) => {
+          if (!loan) {
+            loan = new LoanModel({borrower, owner, book, status: 'Pending'});
+            loan
+              .save()
+              .then((loan) => {
+                res
+                  .status(200)
+                  .send(loan);
+              });
+          } else {
+            res
+              .status(409)
+              .send();
+          }
         })
         .catch(console.error);
     });

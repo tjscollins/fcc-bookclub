@@ -57,6 +57,22 @@ export const userSessionReducer = (state = {}, action) => {
         ...state,
         profile: action.profile,
       };
+    case 'UPDATE_LOANS':
+      return {
+        ...state,
+        loans: {
+          owner: [...action.loans[0]],
+          borrower: [...action.loans[1]],
+        },
+      };
+    case 'BORROW_BOOK':
+      return {
+        ...state,
+        loans: {
+          owner: [...state.loans.owner],
+          borrower: [...state.loans.borrower, action.loan],
+        },
+      };
     default:
       return state;
   }
