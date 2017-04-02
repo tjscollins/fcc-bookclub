@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 /*----------Components----------*/
 import Header from 'Header';
+import TradeRequests from 'TradeRequests';
 
 /*----------Redux----------*/
 import * as actions from 'actions';
@@ -118,15 +119,7 @@ export class MyBooks extends Component {
         <Header />
         <br />
         <div className='container'>
-          <div className='row'>
-            <button className='btn btn-success'>
-              Your trade requests
-            </button>
-            &nbsp;
-            <button className='btn btn-primary'>
-              Trade requests for you
-            </button>
-          </div>
+          <TradeRequests />
           <div className='row'>
             <h1>My Books:</h1>
             <hr />

@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 /*----------Components----------*/
 import Header from 'Header';
+import TradeRequests from 'TradeRequests';
 
 /*----------Redux----------*/
 import * as actions from 'actions';
@@ -32,7 +33,21 @@ export class BookList extends Component {
         console.error(error);
       });
   }
-  requestBook() {}
+  requestBook(index) {
+    const book = this.props.library[index];
+    let request = {
+      url: '/request',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: book,
+      dataType: 'json'
+    };
+    $.ajax(request)
+      .done(() => {})
+      .catch(console.error);
+  }
   library = () => {
     const {library} = this.props;
     return library.map((book, i) => {
@@ -47,11 +62,11 @@ export class BookList extends Component {
             </a>
             <i
               onClick={this
-              .requestBook
-              .bind(this, i)}
-              className='fa fa-check-square request-book'/>
+                .requestBook
+                .bind(this, i)}
+              className='fa fa-check-square request-book' />
           </div>
-          <img src={thumbnail}/>
+          <img src={thumbnail} />
         </div>
       );
     });
@@ -62,15 +77,7 @@ export class BookList extends Component {
         <Header />
         <br />
         <div className='container'>
-          <div className='row'>
-            <button className='btn btn-success'>
-              Your trade requests
-            </button>
-            &nbsp;
-            <button className='btn btn-primary'>
-              Trade requests for you
-            </button>
-          </div>
+          <TradeRequests />
           <div className='row'>
             <h1>All Books:</h1>
             <hr />
