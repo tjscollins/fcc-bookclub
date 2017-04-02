@@ -5,6 +5,7 @@ const _ = require('underscore');
 const path = process.cwd();
 const bcrypt = require('bcryptjs');
 const UserModel = require('../models/users');
+const BookModel = require('../models/book');
 
 const sendIndex = (req, res) => {
   res.sendFile(`${path}/public/index.html`);
@@ -103,7 +104,7 @@ module.exports = function(app, passport) {
             password: hash
           }, (err, raw) => {
             if (err)
-              console.log('Error patching password', err);
+              console.error('Error patching password', err);
             }
           );
         })
@@ -207,6 +208,11 @@ module.exports = function(app, passport) {
           return user.addBook(book);
         })
         .then((book) => {
+          let newBook = new BookModel({
+            volumeInfo: JSON.stringify(book.volumeInfo),
+            owner: _id
+          });
+          newBook.save();
           res
             .status(200)
             .send(book);
@@ -219,12 +225,10 @@ module.exports = function(app, passport) {
     })
     .delete((req, res) => {
       const {_id, index} = req.body;
-      console.log(_id, index);
       UserModel
         .findOne({_id})
         .then((user) => {
-          console.log(user);
-          user
+          let {title} = user
             .bookCollection
             .splice(index, 1);
           user
@@ -233,6 +237,22 @@ module.exports = function(app, passport) {
               res
                 .status(200)
                 .send({bookCollection: user.bookCollection});
+              return title;
+            })
+            .then((title) => {
+              BookModel.find({owner: _id})
+                .then((books) => {
+                  return books.filter((book) => {
+                    return JSON.parse(book.volumeInfo).title === title;
+                  });
+                }).then((books) => {
+                  if(books.length === 1 ) {
+                    BookModel.find({_id: books[0]._id}).remove().exec();
+                  } else {
+                    throw Error('Duplicate books to delete!');
+                  }
+                })
+                .catch(console.error);
             });
         })
         .catch((e) => {
@@ -240,5 +260,14 @@ module.exports = function(app, passport) {
             .status(400)
             .send(e);
         });
+    });
+
+  app
+    .route('/library')
+    .get((req, res) => {
+      BookModel.find({}).then((books) => {
+        res.status(200).send(books);
+      })
+      .catch(console.error);
     });
 };

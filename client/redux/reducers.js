@@ -4,6 +4,15 @@
 //       return state;
 //   }
 // };
+//
+export const libraryReducer = (state = [], action) => {
+  switch(action.type) {
+    case 'SET_LIBRARY':
+      return action.library;
+    default:
+      return state;
+  }
+};
 
 export const userSessionReducer = (state = {}, action) => {
   switch (action.type) {

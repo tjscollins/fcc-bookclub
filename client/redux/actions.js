@@ -27,3 +27,10 @@ export const setProfile = (profile) => {
     profile,
   };
 };
+
+export const setLibrary = (library) => {
+  return {
+    type: 'SET_LIBRARY',
+    library,
+  };
+};
