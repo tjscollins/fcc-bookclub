@@ -12,13 +12,12 @@ import $ from 'jquery';
 export class TradeRequests extends Component {
   state = {
     showMyRequests: false,
-    showIncomingRequests: false
+    showIncomingRequests: false,
   }
   render() {
     const {showMyRequests, showIncomingRequests} = this.state;
     return (
       <div>
-
         <div className='row'>
           <button
             onClick={() => this.setState({
@@ -56,10 +55,9 @@ export class TradeRequests extends Component {
             );
           }
         })(showIncomingRequests)}
-
       </div>
     );
   }
 }
 
-export default TradeRequests;
+export default connect((state) => state)(TradeRequests);
