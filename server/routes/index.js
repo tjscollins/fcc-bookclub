@@ -298,7 +298,7 @@ module.exports = function(app, passport) {
       const borrower = req.body._id;
       const book = req.body.book._id;
       const {owner} = req.body.book;
-      console.log(req.body);
+      // console.log(req.body);
       LoanModel
         .findOne({book})
         .then((loan) => {
@@ -318,5 +318,18 @@ module.exports = function(app, passport) {
           }
         })
         .catch(console.error);
+    })
+    .delete((req, res) => {
+      const borrower = req.body._id;
+      const book = req.body.book._id;
+      const {owner} = req.body.book;
+      console.log(borrower, book, owner);
+      try {
+        LoanModel.findOne({book}).remove().exec().then(() => {
+          res.status(200).send({});
+        });
+      } catch (error) {
+        console.error(error);
+      }
     });
 };

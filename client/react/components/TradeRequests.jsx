@@ -45,7 +45,7 @@ export class TradeRequests extends Component {
     $
       .ajax(request)
       .done((newLibrary) => {
-        console.log(newLibrary);
+        // console.log(newLibrary);
         if (library.length !== newLibrary.length) {
           dispatch(actions.setLibrary(newLibrary));
         }
@@ -66,43 +66,36 @@ export class TradeRequests extends Component {
     $
       .ajax(request)
       .done((loans) => {
-        console.log('Fetched Loans: ', loans);
+        // console.log('Fetched Loans: ', loans);
         dispatch(actions.updateLoans(loans));
       })
       .catch((error) => {
         console.error(error);
       });
   }
+  cancelLoanRequest = (book, index) => {
+    const {dispatch, userSession} = this.props;
+    const {_id} = userSession;
+    // console.log('Canceling request: ', book);
+    let request = {
+      url: '/request',
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: JSON.stringify({book, _id}),
+      dataType: 'json'
+    };
+    $.ajax(request)
+      .done((res) => {
+        dispatch(actions.cancelLoanRequest(book));
+      })
+      .catch(console.error);
+  }
   render() {
     const {showMyRequests, showIncomingRequests} = this.state;
     const {loans} = this.props.userSession;
     const {library} = this.props;
-    const test = loans
-      .borrower
-      .map((loan) => {
-        return library.filter((book) => {
-          return book._id === loan.book;
-        })[0];
-      })
-      .map((book, i) => {
-        let {title, imageLinks: {
-            thumbnail
-          }, infoLink} = JSON.parse(book.volumeInfo);
-        return (
-          <div
-            key={`${title}-request-${i}`}
-            className='book-on-shelf col-xs-6 col-sm-3 col-md-2'>
-            <div className='book-header'>
-              <a href={infoLink} target='_blank'>
-                <h4>{title}</h4>
-              </a>
-              <i className='fa fa-minus-square remove-book' />
-            </div>
-            <img src={thumbnail} />
-          </div>
-        );
-      });
-    console.log('Requests: ', test);
     return (
       <div>
         <div className='row'>
@@ -146,7 +139,7 @@ export class TradeRequests extends Component {
                           <a href={infoLink} target='_blank'>
                             <h4>{title}</h4>
                           </a>
-                          <i className='fa fa-times remove-book' />
+                          <i onClick={this.cancelLoanRequest.bind(this, book, i)} className='fa fa-minus-square remove-book' />
                         </div>
                         <img src={smallThumbnail} />
                       </div>
@@ -181,7 +174,7 @@ export class TradeRequests extends Component {
                           <a href={infoLink} target='_blank'>
                             <h4>{title}</h4>
                           </a>
-                          <i className='fa fa-times remove-book' />
+                          {/* <i className='fa fa-times remove-book' /> */}
                         </div>
                         <img src={smallThumbnail} />
                       </div>
@@ -198,7 +191,7 @@ export class TradeRequests extends Component {
 
 TradeRequests.propTypes = {
   dispatch: PropTypes.func,
-  library: PropTypes.object,
+  library: PropTypes.array,
   userSession: PropTypes.object
 };
 

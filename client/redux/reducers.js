@@ -73,6 +73,14 @@ export const userSessionReducer = (state = {}, action) => {
           borrower: [...state.loans.borrower, action.loan],
         },
       };
+    case 'CANCEL_LOAN':
+      return {
+        ...state,
+        loans: {
+          owner: [...state.loans.owner],
+          borrower: state.loans.borrower.filter((loan) => loan.book !== action.book._id),
+        },
+      };
     default:
       return state;
   }

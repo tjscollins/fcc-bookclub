@@ -37,7 +37,7 @@ export class Login extends React.Component {
         browserHistory.push('/');
       })
       .fail((jqXHR, status, err) => {
-        console.log('Login error', jqXHR);
+        console.error('Login error', jqXHR);
       });
   }
   render() {

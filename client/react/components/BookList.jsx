@@ -19,19 +19,36 @@ export class BookList extends Component {
       url: '/request',
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        'Content-type': 'application/json'
       },
       data: JSON.stringify({book, _id}),
       dataType: 'json'
     };
-    $.ajax(request)
+    $
+      .ajax(request)
       .done((loan) => {
-        console.log('New loan registered:', loan);
-        if(loan) {
+        // console.log('New loan registered:', loan);
+        if (loan) {
           dispatch(actions.borrowBook(loan));
         }
       })
       .catch(console.error);
+  }
+  canRequest = (book, i) => {
+    const {loans} = this.props.userSession;
+    const {_id, owner} = book;
+    let requested = loans
+      .owner
+      .some((loan) => loan.book === _id) || loans
+      .borrower
+      .some((loan) => loan.book === _id) || this.props.userSession._id === owner;
+    if (!requested) {
+      return <i
+        onClick={this
+          .requestBook
+          .bind(this, i)}
+               className='fa fa-check-square request-book' />;
+    }
   }
   library = () => {
     const {library} = this.props;
@@ -45,11 +62,7 @@ export class BookList extends Component {
             <a href={infoLink} target='_blank'>
               <h4>{title}</h4>
             </a>
-            <i
-              onClick={this
-                .requestBook
-                .bind(this, i)}
-              className='fa fa-check-square request-book' />
+            {this.canRequest(book, i)}
           </div>
           <img src={thumbnail} />
         </div>
@@ -65,6 +78,7 @@ export class BookList extends Component {
           <TradeRequests />
           <div className='row'>
             <h1>All Books:</h1>
+            <p>Click the <i className='fa fa-check-square' /> to request</p>
             <hr />
           </div>
           <div className='row'>

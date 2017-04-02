@@ -74,7 +74,7 @@ export class MyBooks extends Component {
             .trim();
         });
         if (items.length) {
-          console.log(items);
+          // console.log(items);
           let request = {
             url: '/mybooklist',
             method: 'POST',
@@ -88,7 +88,7 @@ export class MyBooks extends Component {
           $
             .ajax(request)
             .done((item) => {
-              console.log(item);
+              // console.log(item);
               dispatch(actions.addBook(item));
             })
             .catch((error) => {

@@ -17,7 +17,6 @@ export class Index extends React.Component {
           <div className='container'>
             <h1>bookBazaar</h1>
             <h4>bring a book, take a book</h4>
-            <a className='btn btn-primary btn-lg' href='#' role='button'>Learn more</a>
           </div>
         </div>
 

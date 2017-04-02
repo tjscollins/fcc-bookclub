@@ -42,6 +42,13 @@ export const borrowBook = (loan) => {
   };
 };
 
+export const cancelLoanRequest = (book) => {
+  return {
+    type: 'CANCEL_LOAN',
+    book,
+  };
+};
+
 // library actions
 export const setLibrary = (library) => {
   return {
