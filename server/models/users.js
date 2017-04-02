@@ -197,7 +197,7 @@ User.statics.resetPassword = function(email) {
           });
           resolve(reqID);
         }, (err) => {
-          console.log('Error hashing reqId', err);
+          console.error('Error hashing reqId', err);
         });
       });
     });
