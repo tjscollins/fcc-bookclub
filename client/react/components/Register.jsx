@@ -1,13 +1,41 @@
 /*----------Modules----------*/
-import React from 'react';
-import {Link} from 'react-router';
+import React, {PropTypes, Component} from 'react';
+import {Link, browserHistory} from 'react-router';
+import {connect} from 'react-redux';
 
 /*----------Components----------*/
 import Header from 'Header';
 
-export class Register extends React.Component {
+/*----------Redux----------*/
+import * as actions from 'actions';
+
+export class Register extends Component {
   constructor() {
     super();
+  }
+  submit = (e) => {
+    e.preventDefault();
+    const {dispatch} = this.props;
+    const {email, password, name} = this.refs;
+    const request = {
+      method: 'post',
+      url: '/register',
+      beforeSend: function(request) {
+        request.setRequestHeader('Content-type', 'application/json');
+      },
+      data: JSON.stringify({email: email.value, password: password.value, name: name.value})
+    };
+    $
+      .ajax(request)
+      .done((res, status, jqXHR) => {
+        dispatch(actions.login(jqXHR.getResponseHeader('x-auth'), JSON.parse(jqXHR.responseText)._id, email.value));
+        this.refs.email.value = '';
+        this.refs.password.value = '';
+        browserHistory.push('/');
+      })
+      .fail((jqXHR, status, err) => {
+        console.error('Registration error', jqXHR);
+      });
   }
   render() {
     return (
@@ -65,5 +93,8 @@ export class Register extends React.Component {
     );
   }
 }
+Register.propTypes = {
+  dispatch: PropTypes.func,
+};
 
-export default Register;
+export default connect((state) => state)(Register);
