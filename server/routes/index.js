@@ -228,7 +228,8 @@ module.exports = function(app, passport) {
       UserModel
         .findOne({_id})
         .then((user) => {
-          let {title} = user
+          let {title} = user.bookCollection[index].volumeInfo;
+          user
             .bookCollection
             .splice(index, 1);
           user
@@ -237,20 +238,24 @@ module.exports = function(app, passport) {
               res
                 .status(200)
                 .send({bookCollection: user.bookCollection});
-              return title;
+
+              return Promise.resolve(title);
             })
             .then((title) => {
-              BookModel.find({owner: _id})
+              BookModel
+                .find({owner: _id})
                 .then((books) => {
                   return books.filter((book) => {
-                    return JSON.parse(book.volumeInfo).title === title;
+                    return JSON
+                      .parse(book.volumeInfo)
+                      .title === title;
                   });
-                }).then((books) => {
-                  if(books.length === 1 ) {
-                    BookModel.find({_id: books[0]._id}).remove().exec();
-                  } else {
-                    throw Error('Duplicate books to delete!');
-                  }
+                })
+                .then((books) => {
+                  BookModel
+                    .find({owner: _id, volumeInfo: books[0].volumeInfo})
+                    .remove()
+                    .exec();
                 })
                 .catch(console.error);
             });
@@ -265,9 +270,13 @@ module.exports = function(app, passport) {
   app
     .route('/library')
     .get((req, res) => {
-      BookModel.find({}).then((books) => {
-        res.status(200).send(books);
-      })
-      .catch(console.error);
+      BookModel
+        .find({})
+        .then((books) => {
+          res
+            .status(200)
+            .send(books);
+        })
+        .catch(console.error);
     });
 };
